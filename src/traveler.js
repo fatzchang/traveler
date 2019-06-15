@@ -45,7 +45,12 @@ class Traveler {
 
   // register the route
   register(route) {
+    if (!(route instanceof Route)) {
+        return false;
+    }
+
     this.routes.push(route);
+    return true;
   }
 
   // travel to the path
