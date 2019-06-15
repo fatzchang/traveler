@@ -65,7 +65,7 @@ class Traveler {
   // remove '/' from head and tail
   static trim(path) {
     return path.toString()
-      .replace(/\/$/, '').replace(/^\//, '');
+      .replace(/\/+$/, '').replace(/^\/+/, '');
   }
 
   // send the url to routes
@@ -73,10 +73,13 @@ class Traveler {
     // 逐一對routes檢查
     for (let i = 0; i < this.routes.length; i += 1) {
       if (this.routes[i].decide(url)) {
+        return true;
         // 如果中了，就不用繼續
         break;
       }
     }
+
+    return false;
   }
 
   // register the route

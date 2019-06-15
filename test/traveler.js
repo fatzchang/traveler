@@ -8,17 +8,19 @@ describe('#register', function() {
 
   });
 
-  it('param must be instance of Route', function(done) {
+  it('not instance of Route should failed', function(done) {
     assert(traveler.register(route) === true);
     assert(traveler.register('string') === false);
     assert(traveler.register(['a', 'b']) === false);
     assert(traveler.register({}) === false);
     assert(traveler.register(undefined) === false);
+    assert(traveler.register(null) === false);
+    assert(traveler.register() === false);
 
     done();
   });
 
-  it('instance of Route should return errow', function(done) {
+  it('instance of Route should pass', function(done) {
     const result = traveler.register(route);
     assert(result);
     done();
@@ -29,12 +31,35 @@ describe('#register', function() {
     assert((traveler.routes[traveler.routes.length - 1] === route));
     done();
   });
+});
 
+describe('#trim', function() {
   it('should remove "/" from head and tail', function(done) {
     assert(Traveler.trim('/a/b') === 'a/b');
     assert(Traveler.trim('a/b/') === 'a/b');
     assert(Traveler.trim('/a/b/c/') === 'a/b/c');
+    assert(Traveler.trim('///a/') === 'a');
+    assert(Traveler.trim('/a///') === 'a');
     assert(Traveler.trim('') === '');
+
+    done();
+  });
+});
+
+describe('#notify', function() {
+  const traveler = new Traveler();
+  const route = new Route('@a/@b/@c', (a, b, c) => {
+
+  })
+
+  it('should be true if match a route', function(done) {
+    traveler.register(route);
+    assert(traveler.notify('') === false);
+    assert(traveler.notify('t') === false);
+    assert(traveler.notify('t/e') === false);
+    assert(traveler.notify('t/e/s') === true);
+    assert(traveler.notify('t/e/s/t') === false);
+    
     done();
   });
 });

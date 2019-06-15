@@ -1,5 +1,5 @@
 {
-  "name": "@fatzchang/traveler",
+  "name": "travelerjs",
   "version": "1.0.0",
   "description": "small frontend router",
   "main": "dist/traveler.js",
