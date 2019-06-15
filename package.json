@@ -1,0 +1,22 @@
+{
+  "name": "traveler",
+  "version": "1.0.0",
+  "description": "small frontend router",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fatzchang/traveler.git"
+  },
+  "keywords": [
+    "router"
+  ],
+  "author": "Fatz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fatzchang/traveler/issues"
+  },
+  "homepage": "https://github.com/fatzchang/traveler#readme"
+}
