@@ -28,7 +28,7 @@ class Route {
       return false;
     }
 
-    for (let i = urlParts.length; i < urlParts.length; i += 1) {
+    for (let i = 0; i < urlParts.length; i += 1) {
       const isParam = /^@/.test(this.parts[i]);
 
       if (!isParam && (urlParts[i] !== this.parts[i])) {
@@ -39,7 +39,6 @@ class Route {
         params.push(urlParts[i]);
       }
     }
-
 
     if (typeof this.act === 'function') {
       this.act(...params); // put the url parts which has '@' into the callback
