@@ -1,4 +1,5 @@
 import Route from './route';
+import helper from './helper';
 
 class Traveler {
   constructor() {
@@ -25,18 +26,12 @@ class Traveler {
   current() {
     let fragment = '';
 
-    fragment = Traveler.trim(decodeURI(window.location.pathname + window.location.hash));
+    fragment = helper.trim(decodeURI(window.location.pathname + window.location.hash));
 
     fragment = fragment.replace(/\?(.*)$/, '');
-    fragment = this.root !== '/' ? fragment.replace(Traveler.trim(this.root), '') : fragment;
+    fragment = this.root !== '/' ? fragment.replace(helper.trim(this.root), '') : fragment;
 
-    return Traveler.trim(fragment);
-  }
-
-  // remove '/' from head and tail
-  static trim(path) {
-    return path.toString()
-      .replace(/\/+$/, '').replace(/^\/+/, '');
+    return helper.trim(fragment);
   }
 
   // send the url to routes
@@ -63,12 +58,12 @@ class Traveler {
 
   // travel to the path
   go(path, replace) {
-    const trimPath = Traveler.trim(path);
+    const trimPath = helper.trim(path);
 
     let url = this.root + trimPath;
 
     if (this.mode === 'hash') {
-      url = `${Traveler.trim(this.root)}#${trimPath}`;
+      url = `${helper.trim(this.root)}#${trimPath}`;
     }
 
     if (replace) {
@@ -84,7 +79,7 @@ class Traveler {
     this.root = '/';
 
     if (typeof rootPath === 'string' && rootPath !== '') {
-      this.root = `/${Traveler.trim(rootPath)}/`;
+      this.root = `/${helper.trim(rootPath)}/`;
     }
   }
 }

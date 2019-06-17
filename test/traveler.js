@@ -33,19 +33,6 @@ describe('#register', function() {
   });
 });
 
-describe('#trim', function() {
-  it('should remove "/" from head and tail', function(done) {
-    assert(Traveler.trim('/a/b') === 'a/b');
-    assert(Traveler.trim('a/b/') === 'a/b');
-    assert(Traveler.trim('/a/b/c/') === 'a/b/c');
-    assert(Traveler.trim('///a/') === 'a');
-    assert(Traveler.trim('/a///') === 'a');
-    assert(Traveler.trim('') === '');
-
-    done();
-  });
-});
-
 describe('#notify', function() {
   const traveler = new Traveler();
   const route = new Route('@a/@b/@c', (a, b, c) => {
