@@ -1,43 +1,10 @@
-class Route {
-  /**
-   * @param  [string] pattern route pattern, e.g. @a/@b/@c
-   * @param  [string] act     action after hit
-   */
-  constructor(pattern, act) {
-    this.pattern = pattern.replace('/', '');
-
-    if (typeof act === 'function') {
-      this.act = act;
-    }
-  }
-
-  /**
-   * Traveler will call this when get a new redirect path
-   * @param  [url] url
-   * @return [bool]
-   */
-  decide(url) {
-    const parts = url.split('/');
-    const params = this.pattern.split('@');
-
-    params.shift();
-
-    if (parts.length === params.length) {
-      if (typeof this.act === 'function') {
-        this.act(...parts); // 分別帶入各個參數
-      }
-
-      return true;
-    }
-
-    return false;
-  }
-}
+import Route from './route';
 
 class Traveler {
   constructor() {
     this.routes = [];
     this.root = '/';
+    this.mode = (window.history.pushState) ? 'history' : 'hash';
 
     // listen
     window.addEventListener('popstate', this.listen.bind(this));
@@ -45,7 +12,11 @@ class Traveler {
 
   // send current url to the routes
   listen() {
-    const cur = this.current();
+    let cur = this.current();
+
+    if (this.mode === 'hash') {
+      cur = cur.replace('#', '');
+    }
 
     this.notify(cur);
   }
@@ -74,8 +45,6 @@ class Traveler {
     for (let i = 0; i < this.routes.length; i += 1) {
       if (this.routes[i].decide(url)) {
         return true;
-        // 如果中了，就不用繼續
-        break;
       }
     }
 
@@ -93,15 +62,30 @@ class Traveler {
   }
 
   // travel to the path
-  go(path) {
-    const url = this.root + path;
-    window.history.pushState(null, null, url);
+  go(path, replace) {
+    const trimPath = Traveler.trim(path);
+
+    let url = this.root + trimPath;
+
+    if (this.mode === 'hash') {
+      url = `${Traveler.trim(this.root)}#${trimPath}`;
+    }
+
+    if (replace) {
+      window.history.replaceState(null, null, url);
+    } else {
+      window.history.pushState(null, null, url);
+    }
 
     this.listen();
   }
 
   setRoot(rootPath) {
-    this.root = `/${Traveler.trim(rootPath)}/`;
+    this.root = '/';
+
+    if (typeof rootPath === 'string' && rootPath !== '') {
+      this.root = `/${Traveler.trim(rootPath)}/`;
+    }
   }
 }
 
