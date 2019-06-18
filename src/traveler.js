@@ -82,4 +82,5 @@ class Traveler {
   }
 }
 
-export { Traveler, Route };
+
+export default { Traveler, Route };

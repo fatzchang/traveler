@@ -1,6 +1,8 @@
 const assert = require('assert');
 
-import { Traveler, Route } from '../src/traveler';
+import lib from '../src/traveler';
+const Traveler = lib.Traveler;
+const Route = lib.Route;
 
 describe('#register', function() {
   const traveler = new Traveler();

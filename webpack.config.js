@@ -14,6 +14,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'traveler.js',
-    library: 'traveler'
+    library: 'travelerjs',
+    libraryTarget: 'umd',
   }
 }
