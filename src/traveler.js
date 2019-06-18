@@ -8,7 +8,11 @@ class Traveler {
     this.mode = (window.history.pushState) ? 'history' : 'hash';
 
     // listen
-    window.addEventListener('popstate', this.listen.bind(this));
+    if (this.mode === 'history') {
+      window.addEventListener('popstate', this.listen.bind(this));
+    } else {
+      window.addEventListener('hashchange', this.listen.bind(this));
+    }
   }
 
   // send current url to the routes
@@ -36,14 +40,8 @@ class Traveler {
 
   // send the url to routes
   notify(url) {
-    // 逐一對routes檢查
-    for (let i = 0; i < this.routes.length; i += 1) {
-      if (this.routes[i].decide(url)) {
-        return true;
-      }
-    }
-
-    return false;
+    // find and execute the first route that hit the pattern
+    return this.routes.find(route => route.decide(url));
   }
 
   // register the route

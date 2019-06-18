@@ -41,11 +41,11 @@ describe('#notify', function() {
 
   it('should be true if match a route', function(done) {
     traveler.register(route);
-    assert(traveler.notify('') === false);
-    assert(traveler.notify('t') === false);
-    assert(traveler.notify('t/e') === false);
-    assert(traveler.notify('t/e/s') === true);
-    assert(traveler.notify('t/e/s/t') === false);
+    assert(typeof traveler.notify('') === 'undefined');
+    assert(typeof traveler.notify('t')  === 'undefined');
+    assert(typeof traveler.notify('t/e')  === 'undefined');
+    assert(traveler.notify('t/e/s') instanceof Route);
+    assert(typeof traveler.notify('t/e/s/t')  === 'undefined');
     
     done();
   });

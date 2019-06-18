@@ -6,10 +6,10 @@ describe('#decide', function() {
   it('should be true if match', function(done) {
     const route = new Route('@a/@b/@c');
 
-
     assert(route.decide('te') === false);
     assert(route.decide('te/st') === false);
     assert(route.decide('te/s/t') === true);
+    assert(route.decide('t/e/s/t') === false);
 
     done();
   });
@@ -41,7 +41,7 @@ describe('#decide', function() {
     done();
   });
 
-  it('should be true if match then route without @', function(done) {
+  it('should be true if match the route without @', function(done) {
     const route_1 = new Route('user/@b/@c');
     const route_2 = new Route('user/@b/world');
 
