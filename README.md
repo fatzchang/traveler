@@ -14,39 +14,24 @@ npm install --save travelerjs
 
 
 ## usage
-### step1:
-#### import the module
 ```js
-import { Traveler, Route } from 'travelerjs';
-```
+import { Traveler, Route } from 'travelerjs'; // import the module
 
-### step2:
-#### instantiate the traveler
-```js
-const traveler = new Traveler();
-```
+const traveler = new Traveler(); // instantiate
 
-### step3:
-#### register the routes
-```js
 traveler.register(new Route('your/path', function() {
     console.log('absolute path hit');
-}));
+})); // register the routes
+
+traveler.listen(); // check the current route (optional)
 ```
 
-### step4 (optional):
-#### check the current route
-```js
-traveler.listen();
-```
-
-### step4:
-#### start traveling
+### and you are ready to go!
 ```js
 traveler.go('your/path');
 ```
 
-## API
+## APIs
 ### traveler
 | Method | Arguments | Description |
 | :----: | :-------: | :---------: |
@@ -60,16 +45,21 @@ traveler.go('your/path');
 basically, the first argument is a path, and the second one is a callback function.
 ```js
 const home_route = new Route('im/going/home', () => {
-    console.log("I'm home!")
+    console.log("I arrive home!")
 });
+traveler.register(home_route)
 ```
 there are also the other way to set the route.
 ```js
-const home_route = new Route('@who/going/home', (someone) => {
-    console.log(`${someone} is at home!`);
+const route = new Route('user/status/@id', (id) => {
+    // use id to send ajax blabla
+    axios.post('example.com', {id}).then((response) => {
+        console.log(response);
+    });
 });
+traveler.register(home_route)
 ```
 it will pass the part of path which has `@` into the callback in order, e.g.
 ```js
-traveler.go('Mary/going/home'); // this will log Mary is at home in console
+traveler.go('user/status/2'); // this will use '2' as the id and send ajax to get the user's status
 ```
