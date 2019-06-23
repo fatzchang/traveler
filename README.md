@@ -36,7 +36,7 @@ traveler.go('your/path');
 | Method | Arguments | Description |
 | :----: | :-------: | :---------: |
 | `listen` |  | check if current url match the existing route |
-| `register` | instance of Route | register the route in list, will check it when a url change event is detected |
+| `register` | instance of Route | register the route in traveler's route list, it will check its list whenever a url change event is detected |
 | `go` | string(path) | will change the current url without reloading the page |
 | `setRoot` | string(path) | default root is `/`, after changed the root, the url path pass to traveler.go will add to the new root directly |
 
@@ -47,6 +47,7 @@ basically, the first argument is a path, and the second one is a callback functi
 const home_route = new Route('im/going/home', () => {
     console.log("I arrive home!")
 });
+
 traveler.register(home_route)
 ```
 there are also the other way to set the route.
@@ -57,7 +58,8 @@ const route = new Route('user/status/@id', (id) => {
         console.log(response);
     });
 });
-traveler.register(home_route)
+
+traveler.register(route)
 ```
 it will pass the part of path which has `@` into the callback in order, e.g.
 ```js
